@@ -37,7 +37,11 @@ pub fn check_credentials(
 ) -> Result<Account, String> {
     for account in accounts {
         if account.credentials.username == credentials.username
-        && argon2::verify_encoded(&account.credentials.password, credentials.password.as_bytes()).is_ok()
+            && argon2::verify_encoded(
+                &account.credentials.password,
+                credentials.password.as_bytes(),
+            )
+            .is_ok()
         {
             return Ok(account);
         }

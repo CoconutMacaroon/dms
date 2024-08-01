@@ -1,4 +1,4 @@
- use actix_multipart::form::{tempfile::TempFile, text::Text, MultipartForm};
+use actix_multipart::form::{tempfile::TempFile, text::Text, MultipartForm};
 use actix_session::{storage::CookieSessionStore, Session, SessionMiddleware};
 use actix_web::{
     get,
@@ -14,12 +14,7 @@ use log::{error, info};
 use rand::random;
 use serde::{Deserialize, Serialize};
 use serde_json::json;
-use std::{
-    fs,
-    io::Read,
-    path::Path,
-    sync::Mutex,
-};
+use std::{fs, io::Read, path::Path, sync::Mutex};
 use uuid::Uuid;
 
 mod authentication;
@@ -155,7 +150,12 @@ async fn create_account(
     database.users.push(Account {
         credentials: Credentials {
             username: data.username.clone(),
-            password: argon2::hash_encoded(data.password.as_bytes(), &random::<[u8; 32]>(), &argon2::Config::default()).expect("Failed hashing password to create user")
+            password: argon2::hash_encoded(
+                data.password.as_bytes(),
+                &random::<[u8; 32]>(),
+                &argon2::Config::default(),
+            )
+            .expect("Failed hashing password to create user"),
         },
         user_id: selected_uuid,
     });
@@ -261,7 +261,7 @@ async fn docs_upload(
                 owner_id: account_uuid,
             };
             let mut temp_file = form.file.file;
-            let mut buffer:Vec<u8> = vec![];
+            let mut buffer: Vec<u8> = vec![];
             temp_file.read_to_end(&mut buffer);
             fs::write(destination_filename, buffer);
             let mut db_x = db.db.lock().unwrap();
