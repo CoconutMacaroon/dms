@@ -1,0 +1,11 @@
+# Where to save uploaded documents
+upload_path = "uploads/"
+
+# How many workers for the web server to use
+workers = 1
+
+# Address to bind on
+listen_addr = "0.0.0.0"
+
+# Post to listen on
+listen_port = 8080

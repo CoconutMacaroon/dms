@@ -1,0 +1,15 @@
+<h2>Actions</h2>
+<button
+  class="btn btn-sm btn-secondary"
+  data-bs-toggle="modal"
+  data-bs-target="#uploader"
+  title="View"
+>
+  Add a document
+</button>
+<h2>Filters</h2>
+{{#each tags}}
+<a href="/docs?tag={{this.name}}"
+  ><span class="badge text-bg-secondary">{{this.name}}</span></a
+>
+{{#unless @last}} {{/unless}} {{/each}}
