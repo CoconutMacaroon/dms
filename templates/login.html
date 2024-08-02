@@ -17,23 +17,7 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     ></script>
-    <style>
-      body {
-        height: 100vh;
-      }
-      .card {
-        max-width: 400px;
-        margin: 0 auto;
-        transform: translateY(-50%);
-        top: 50%;
-      }
-      .btn-group {
-        width: 100%;
-      }
-      #loginError {
-        display: none;
-      }
-    </style>
+    <link rel="stylesheet" href="static/signedout.css" />
     <title>Sign in</title>
   </head>
   <body>
@@ -61,16 +45,15 @@
               name="password"
             />
           </div>
-          <div class="btn-group">
-            <button class="btn btn-primary" type="submit">Sign in</button>
-            <button
-              class="btn btn-outline-primary"
-              type="button"
-              onclick="window.location.href = '/signup';"
-            >
-              Or, create a new account
-            </button>
-          </div>
+          <button class="btn btn-primary" type="submit">Sign in</button>
+          <hr />
+          <button
+            class="btn btn-outline-primary"
+            type="button"
+            onclick="window.location.href = '/signup';"
+          >
+            Or, create a new account
+          </button>
         </form>
       </div>
       <div class="card-footer" id="loginError">

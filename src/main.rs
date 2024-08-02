@@ -308,6 +308,11 @@ async fn auth(
     }
 }
 
+#[get("/static/signedout.css")]
+async fn static_signedout_css() -> impl Responder {
+    HttpResponse::Ok().body(fs::read_to_string("static/signedout.css").unwrap())
+}
+
 fn load_database<P: AsRef<Path>>(path: P) -> Database {
     // try reading the database file, but if reading it fails (for example, if
     // the file doesn't exist), return an empty database instead
@@ -359,6 +364,7 @@ async fn main() -> std::io::Result<()> {
             .service(auth)
             .service(logout)
             .service(create_account)
+            .service(static_signedout_css)
     })
     .workers(config::get_config().workers)
     .bind((
