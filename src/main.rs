@@ -133,7 +133,7 @@ async fn signup(hb: web::Data<Handlebars<'_>>) -> HttpResponse {
 
 fn dump_database(db: Database) {
     fs::write(
-        "database.json",
+        "/dms/uploads/database.json",
         serde_json::to_string_pretty(&db).expect("Creating json for dump failed"),
     )
     .expect("Writing JSON to file failed");
