@@ -128,7 +128,7 @@ fn filter_docs(
 
 #[get("/signup")]
 async fn signup(hb: web::Data<Handlebars<'_>>) -> HttpResponse {
-    render_tpl("signup", json!({"theme": "light"}), hb)
+    render_tpl("signup", json!({"theme": "dark"}), hb)
 }
 
 fn dump_database(db: Database) {
@@ -187,14 +187,14 @@ async fn docs(
             "docs",
             json!({
                 "documents": *filter_docs(req, session.clone(), db_docs.clone()),
-                "theme": "light",
+                "theme": "dark",
                 "users": *db_users,
                 "tags": find_tags(db_docs.clone())
             }),
             hb,
         )
     } else {
-        render_tpl("login", json!({"theme": "light"}), hb)
+        render_tpl("login", json!({"theme": "dark"}), hb)
     }
 }
 
