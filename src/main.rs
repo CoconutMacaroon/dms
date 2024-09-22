@@ -105,8 +105,6 @@ fn filter_docs(
     // create a copy to filter down
     let mut filtered_docs: Vec<StoredDocument> = documents.clone();
 
-    println!("{}", get_account_id(session.clone()));
-
     // only show documents belonging to the signed-in account
     filtered_docs.retain(|doc| doc.owner_id == get_account_id(session.clone()));
 
