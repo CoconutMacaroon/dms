@@ -179,8 +179,9 @@ async fn create_account(
 
 fn format_date(date: Option<String>) -> String {
     if date.is_some() {
-        DateTime::from_timestamp_millis(date.unwrap().parse::<i64>().unwrap())
-            .unwrap().to_string()
+        let document_date = DateTime::from_timestamp_millis(date.unwrap().parse::<i64>().unwrap()).unwrap();
+        // Jan 01, 1970
+        document_date.format("%b %d, %Y").to_string()
     } else {
         "Invalid/unknown date".to_string()
     }
