@@ -14,8 +14,12 @@ use log::{error, info};
 use rand::random;
 use serde::{Deserialize, Serialize};
 use serde_json::json;
-use std::{fs, io::Read, path::Path, sync::Mutex};
+use std::{fs, io::Read, option::Option, path::Path, sync::Mutex};
 use uuid::Uuid;
+
+extern crate chrono;
+
+use chrono::prelude::*;
 
 mod authentication;
 mod config;
@@ -41,6 +45,7 @@ struct Tag {
 struct UploadedDocument {
     title: String,
     tags: Vec<Tag>,
+    date: Option<String>,
 }
 
 /// A stored document, containing user-provided metadata and a document ID
@@ -172,6 +177,15 @@ async fn create_account(
     Redirect::to("/").see_other()
 }
 
+fn format_date(date: Option<String>) -> String {
+    if date.is_some() {
+        DateTime::from_timestamp_millis(date.unwrap().parse::<i64>().unwrap())
+            .unwrap().to_string()
+    } else {
+        "Invalid/unknown date".to_string()
+    }
+}
+
 #[get("/")]
 async fn docs(
     req: HttpRequest,
@@ -181,8 +195,11 @@ async fn docs(
 ) -> impl Responder {
     if check_session(session.clone()) {
         let db_data = db.db.lock().unwrap();
-        let db_docs = db_data.documents.clone();
+        let mut db_docs = db_data.documents.clone();
         let db_users = db_data.documents.clone();
+        for doc in &mut db_docs {
+            doc.uploaded_document.date = Some(format_date(doc.uploaded_document.date.clone()));
+        }
         render_tpl(
             "docs",
             json!({
