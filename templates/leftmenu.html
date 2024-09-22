@@ -8,8 +8,10 @@
   Add a document
 </button>
 <h2>Filters</h2>
+<a href="/">Clear filters</a>
+<br>
 {{#each tags}}
-<a href="/docs?tag={{this.name}}"
+<a href="/?tag={{this.name}}"
   ><span class="badge text-bg-secondary">{{this.name}}</span></a
 >
 {{#unless @last}} {{/unless}} {{/each}}
